@@ -2,21 +2,21 @@ import "babel-polyfill"
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
 
-import Counter from './Counter'
-import reducer from './reducers'
+import Product from './Product'
 
-const store = createStore(reducer)
+import store from "./configureStore";
 
-const action = type => store.dispatch({type})
+// actions
+import * as ProductActions from "./actions/product"
 
+// view
 function render() {
   ReactDOM.render(
-    <Counter
-      value={store.getState()}
-      onIncrement={() => action('INCREMENT')}
-      onDecrement={() => action('DECREMENT')} />,
+    <Product
+      state={store.getState()}
+      getProducts={() => store.dispatch(ProductActions.requestGetProducts())}
+    />,
     document.getElementById('root')
   )
 }
